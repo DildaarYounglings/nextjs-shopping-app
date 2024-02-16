@@ -3,12 +3,13 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function Nav() {
-  const [isOpen, setIsOpen] = useState(true);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const currentWindowWidth = window.innerWidth;
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [windowWidth, setWindowWidth] = useState<number>(currentWindowWidth);
   useEffect(() => {
     setWindowWidth(window.innerWidth);
   }, [windowWidth]);
-  if (windowWidth <= 514) {
+  if (windowWidth <= 600) {
     return (
       <div
         className="w-full flex flex-col gap-3 fixed top-0 left-0 cursor-pointer"
@@ -111,33 +112,35 @@ function Nav() {
         {"Outlaw Stickers"}
         <span style={{ color: "lightgrey" }}>{" />"}</span>
       </button>
-      <nav className="flex flex-row" style={{margin:"0px 1rem 0rem auto",gap:"10%"}}>
-        <div className="flex flex-row gap-3" style={{padding:"0.5rem"}}>
-            <Link
+      <nav
+        className="flex flex-row"
+        style={{ margin: "0px 1rem 0rem auto", gap: "10%" }}
+      >
+        <div className="flex flex-row gap-3" style={{ padding: "0.5rem" }}>
+          <Link
             style={{
-                backgroundColor: "lightcyan",
-                width: "1fr",
-                height: "fit-content",
-                padding: "0.5rem",
-                textAlign: "center",
+              backgroundColor: "lightcyan",
+              width: "1fr",
+              height: "fit-content",
+              padding: "0.5rem",
+              textAlign: "center",
             }}
             href="/"
-            >
+          >
             Home
-            </Link>
-            <Link
+          </Link>
+          <Link
             style={{
-                backgroundColor: "lightcyan",
-                width: "1fr",
-                height: "fit-content",
-                padding: "0.5rem",
-                textAlign: "center",
+              backgroundColor: "lightcyan",
+              width: "1fr",
+              height: "fit-content",
+              padding: "0.5rem",
+              textAlign: "center",
             }}
             href="/shop"
-            >
+          >
             Products
-            </Link>
-
+          </Link>
         </div>
         <div
           style={{
@@ -148,7 +151,7 @@ function Nav() {
             display: "flex",
             gap: "1rem",
             margin: "0px auto",
-            padding:"0.5rem"
+            padding: "0.5rem",
           }}
         >
           <Link

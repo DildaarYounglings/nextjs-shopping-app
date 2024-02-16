@@ -19,10 +19,10 @@ const ProductsPage = () => {
         )
     }
   return (
-    <div>
+    <div className="flex gap-10" style={{width:"1fr"}}>
         {productsArray.length > 0? productsArray.map((product) => (
-            <div>
-                {product.stickerName}{product.stickerPrice}
+            <div className="flex flex-col p-3 bg-white rounded-3xl" style={{height:"1fr",width:"200px"}}>
+                <span>{product.stickerName}</span><span>R {product.stickerPrice}</span> <button type="button" className="w-full h-fit p-1 bg-green-300">buy</button>
             </div>
         )):<></>}
     </div>
