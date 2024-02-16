@@ -1,5 +1,4 @@
 "use client"
-import useGet from '@/hooks/useGet';
 import React, { useEffect, useState } from 'react';
 type Product = {
     stickerName:string,
@@ -7,22 +6,25 @@ type Product = {
 }
 const ProductsPage = () => {
     const [windowWidth,setWindowWidth] = useState(0);
-    const [productsArray,setProductsArray] = useState<Product[]>([]);
-    useEffect(()=>{
-        const data = useGet("/api/products");
-        setProductsArray(data)
-        setWindowWidth(window.innerWidth);
-    },[windowWidth])
+    const [productsArray,setProductsArray] = useState<any[]>([]);
+    useEffect(
+        () => {
+            fetch("/api/products/").then(res => res.json()).then(data => setProductsArray(data));
+            setWindowWidth(window.innerWidth);
+        },[windowWidth]
+    )
     if(windowWidth <= 500){
         return(
         <div>ProductsdisplayMobileView</div>
         )
     }
   return (
-    <div>{productsArray.map((product) => {
-        return(<div>{product}</div>);
-    }
-    )}
+    <div>
+        {productsArray.length > 0? productsArray.map((product) => (
+            <div>
+                {product.stickerName}{product.stickerPrice}
+            </div>
+        )):<></>}
     </div>
   )
 }
