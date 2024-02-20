@@ -3,13 +3,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function Nav() {
-  const currentWindowWidth = window.innerWidth;
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const [windowWidth, setWindowWidth] = useState<number>(currentWindowWidth);
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-  }, [windowWidth]);
-  if (windowWidth <= 600) {
+  if (window.innerWidth <= 600) {
     return (
       <div
         className="w-full flex flex-col gap-3 fixed top-0 left-0 cursor-pointer"
