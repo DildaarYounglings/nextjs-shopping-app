@@ -1,9 +1,10 @@
 "use client";
+import { CheckoutProduct } from "@/models/checkoutCart";
 import React, { useEffect, useState } from "react";
 
 function CheckoutCart() {
   const [isCheckoutCartOpen, setIsCheckoutCartOpen] = useState(false);
-  const [checkoutCart, setCheckoutCart] = useState<any[]>([]);
+  const [checkoutCart, setCheckoutCart] = useState<CheckoutProduct[]>([]);
   useEffect(() => {
     fetch("/api/checkout").then(res => res.json()).then(data => setCheckoutCart(data));
   }, [isCheckoutCartOpen]);
@@ -15,9 +16,10 @@ function CheckoutCart() {
           style={{ bottom: "4rem" }}
         >
           {checkoutCart.length > 0 &&
-            checkoutCart.map((product, index) => <div key={index}>d</div>)}
+            checkoutCart.map((checkoutProduct, index) => <div key={index}>{checkoutProduct.id} {checkoutProduct.stickerName} {checkoutProduct.stickerPrice}</div>)}
         </div>
         <div
+          onClick={() => setIsCheckoutCartOpen(!isCheckoutCartOpen)}
           className={"fixed right-3 bottom-3 bg-white rounded-full"}
           style={{ padding: "0.5rem 1.5rem" }}
         >
@@ -36,6 +38,7 @@ function CheckoutCart() {
   }
   return (
     <div
+      onClick={() => setIsCheckoutCartOpen(!isCheckoutCartOpen)}
       className={"fixed right-3 bottom-3 bg-white rounded-full"}
       style={{ padding: "0.5rem 1.5rem" }}
     >

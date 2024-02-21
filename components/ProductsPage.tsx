@@ -5,39 +5,38 @@ type Product = {
   stickerPrice: number;
 };
 const ProductsPage = () => {
-  const [productsArray, setProductsArray] = useState<any[]>([]);
+  const [productsArray, setProductsArray] = useState<Product[]>([]);
   useEffect(() => {
     fetch("/api/products/")
       .then((res) => res.json())
       .then((data) => setProductsArray(data));
-  }, []);
-  async function handleSendToCheckout(product: any) {
+  }, [productsArray]);
+  const handleSendToCheckout = async function(product:Product) {
     const d = await fetch("/api/checkout", {
-      method: "POST",
+      method:'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(product),
-    });
+    }).then(res => console.log(res.status));
   }
   if (window.innerWidth <= 500) {
     return (
       <div className="flex gap-10" style={{ width: "1fr" }}>
-        {productsArray.length > 0 ? (
-          productsArray.map((product) => (
+        {productsArray.length > 0 &&(
+          productsArray.map((product,index) => (
             <div
+              key={index}
               className="flex flex-col p-3 bg-white rounded-3xl"
               style={{ height: "1fr", width: "200px" }}
             >
               <span>{product.stickerName}</span>
               <span>R {product.stickerPrice}</span>
-              <button onClick={() => {handleSendToCheckout(product)}} type="button" className="w-full h-fit p-1 bg-green-300">
+              <button onClick={() => {console.log("sending to checkout");handleSendToCheckout(product)}} type="button" className="w-full h-fit p-1 bg-green-300">
                 buy
               </button>
             </div>
           ))
-        ) : (
-          <></>
         )}
       </div>
     );
@@ -45,8 +44,9 @@ const ProductsPage = () => {
   return (
     <div className="flex gap-10" style={{ width: "1fr" }}>
       {productsArray.length > 0 ? (
-        productsArray.map((product) => (
+        productsArray.map((product,index) => (
           <div
+            key={index}
             className="flex flex-col p-3 bg-white rounded-3xl"
             style={{ height: "1fr", width: "200px" }}
           >

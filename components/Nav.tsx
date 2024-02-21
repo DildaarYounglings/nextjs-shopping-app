@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  if (window.innerWidth <= 600) {
+  if(window.innerWidth <= 600) {
     return (
       <div
         className="w-full flex flex-col gap-3 fixed top-0 left-0 cursor-pointer"
