@@ -1,24 +1,23 @@
 "use client";
+
+import { Product } from "@/app/api/products/data";
 import React, { useEffect, useState } from "react";
-type Product = {
-  stickerName: string;
-  stickerPrice: number;
-};
+
 const ProductsPage = () => {
   const [productsArray, setProductsArray] = useState<Product[]>([]);
-  useEffect(() => {
-    fetch("/api/products/")
-      .then((res) => res.json())
-      .then((data) => setProductsArray(data));
-  }, [productsArray]);
-  const handleSendToCheckout = async function(product:Product) {
-    const d = await fetch("/api/checkout", {
+  useEffect(()=>{
+    fetch("/api/products/").then((res:Response) => res.json()).then((d:Product[]) => setProductsArray(d)).catch((err) => console.log(err));
+  },[])
+  const handleSendToCheckout = async function(product:Product){
+    const response = await fetch("/api/checkout", {
       method:'POST',
+      body: JSON.stringify({...product}),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(product),
-    }).then(res => console.log(res.status));
+    });
+    const data = await response.json;
+    console.log(data);
   }
   if (window.innerWidth <= 500) {
     return (
@@ -32,7 +31,7 @@ const ProductsPage = () => {
             >
               <span>{product.stickerName}</span>
               <span>R {product.stickerPrice}</span>
-              <button onClick={() => {console.log("sending to checkout");handleSendToCheckout(product)}} type="button" className="w-full h-fit p-1 bg-green-300">
+              <button onClick={() => {handleSendToCheckout(product)}} type="button" className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100">
                 buy
               </button>
             </div>
@@ -52,7 +51,7 @@ const ProductsPage = () => {
           >
             <span>{product.stickerName}</span>
             <span>R {product.stickerPrice}</span>{" "}
-            <button type="button" className="w-full h-fit p-1 bg-green-300">
+            <button onClick={() => handleSendToCheckout(product)} type="button" className="w-full h-fit p-1 bg-green-300">
               buy
             </button>
           </div>
