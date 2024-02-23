@@ -17,7 +17,6 @@ const ProductsPage = () => {
       },
     });
     const data = await response.json;
-    console.log(data);
   }
   if (window.innerWidth <= 500) {
     return (
