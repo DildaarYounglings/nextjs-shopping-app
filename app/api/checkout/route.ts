@@ -22,8 +22,14 @@ export async function POST(req:Request){
 export async function DELETE(req:Request){
     if(req.method === "DELETE"){
         const product:CheckoutProduct= await req.json();// this product comes from the frontend//
-        const itemCopy:CheckoutProduct = checkoutCart[checkoutCart.indexOf(product)];
-        checkoutCart.splice(checkoutCart.indexOf(product),1);// deletes the specific item out of the array //
+        let itemCopy:CheckoutProduct = checkoutCart[checkoutCart.indexOf(product)];
+        checkoutCart.map((x) => {
+            if(x.id === product.id && x.stickerName === product.stickerName && x.stickerPrice === product.stickerPrice){
+                itemCopy = x
+            }
+            return x
+        });
+        checkoutCart.splice(checkoutCart.indexOf(itemCopy),1);// deletes the specific item out of the array //
         return new Response(JSON.stringify(itemCopy));
     }
     console.log("has been deleted hopefully %d",checkoutCart);

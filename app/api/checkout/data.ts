@@ -3,4 +3,4 @@ export type CheckoutProduct = {
     stickerName:string,
     stickerPrice:number,
 }
-export const checkoutCart:CheckoutProduct[] = []
+export let checkoutCart:CheckoutProduct[] = []
