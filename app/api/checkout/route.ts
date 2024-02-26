@@ -17,21 +17,13 @@ export async function POST(req:Request){
         if(checkingArray.includes(checkoutProduct.stickerName) === false){checkoutCart.push(newCheckoutProduct);}
         return new Response(JSON.stringify(newCheckoutProduct));
     }
-    console.log("has been added");
+    console.log("has been added %d",checkoutCart);
 }
 export async function DELETE(req:Request){
     if(req.method === "DELETE"){
-        const product:Product = await req.json();// this product comes from the frontend//
-        let item:CheckoutProduct = {id:0,stickerName:"",stickerPrice:0,};
-        const setItemToValue = function(value:CheckoutProduct){item = value;}
-        checkoutCart.map(
-            (x:CheckoutProduct) => {
-                if(x.stickerName === product.stickerName && x.stickerPrice === product.stickerPrice){setItemToValue(x);}
-                return x;
-            }
-        );
-        const itemCopy:CheckoutProduct = checkoutCart[checkoutCart.indexOf(item)];
-        checkoutCart.splice(checkoutCart.indexOf(item),1);// deletes the specific item out of the array //
+        const product:CheckoutProduct= await req.json();// this product comes from the frontend//
+        const itemCopy:CheckoutProduct = checkoutCart[checkoutCart.indexOf(product)];
+        checkoutCart.splice(checkoutCart.indexOf(product),1);// deletes the specific item out of the array //
         return new Response(JSON.stringify(itemCopy));
     }
     console.log("has been deleted hopefully %d",checkoutCart);
