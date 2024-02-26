@@ -1,5 +1,5 @@
 "use client";
-import { CheckoutProduct } from "@/models/checkoutCart";
+import { CheckoutProduct } from "@/app/api/checkout/data";
 import React, { useEffect, useState } from "react";
 
 function CheckoutCart() {
@@ -8,15 +8,29 @@ function CheckoutCart() {
   useEffect(() => {
     fetch("/api/checkout").then(res => res.json()).then(data => setCheckoutCart(data));
   }, [checkoutCart]);
+  async function handleDeleteFromCheckoutCart(checkoutProduct: CheckoutProduct){
+    const response = await fetch("/api/checkout", {
+      method:'DELETE',
+      body: JSON.stringify({...checkoutProduct}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json;
+  }
   if (isCheckoutCartOpen) {
     return (
       <React.Fragment>
         <div
-          className="fixed right-3 flex-col bg-white"
-          style={{ bottom: "4rem" }}
+          className="fixed right-3 flex flex-col"
+          style={{ bottom: "4rem",backgroundColor:"darkcyan",height:"fit-content",width:"200px",padding:"1rem",gap:"1rem"}}
         >
           {checkoutCart.length > 0 &&
-            checkoutCart.map((checkoutProduct, index) => <div key={index}>{checkoutProduct.id} {checkoutProduct.stickerName} {checkoutProduct.stickerPrice}</div>)}
+            checkoutCart.map((checkoutProduct, index) => <div className="bg-white cursor-pointer" style={{padding:"1rem",border:"1px solid black"}} key={index}>
+              <p className="bg-white cursor-pointer">{checkoutProduct.stickerName}</p>
+              <p className="bg-white cursor-pointer">{checkoutProduct.stickerPrice}</p>
+              <button className="bg-white cursor-pointer" onClick={() => handleDeleteFromCheckoutCart(checkoutProduct)}>Delete</button>
+            </div>)}
         </div>
         <div
           onClick={() => setIsCheckoutCartOpen(!isCheckoutCartOpen)}
