@@ -25,11 +25,12 @@ function CheckoutCart() {
           className="fixed right-3 flex flex-col"
           style={{ bottom: "4rem",backgroundColor:"darkcyan",height:"fit-content",width:"200px",padding:"1rem",gap:"1rem"}}
         >
+          <div className="flex" style={{gap:"2rem"}}><button>X</button><button style={{backgroundColor:"red"}}>🗑️</button></div>
           {checkoutCart.length > 0 &&
             checkoutCart.map((checkoutProduct, index) => <div className="bg-white cursor-pointer" style={{padding:"1rem",border:"1px solid black"}} key={index}>
               <p className="bg-white cursor-pointer">{checkoutProduct.stickerName}</p>
               <p className="bg-white cursor-pointer">{checkoutProduct.stickerPrice}</p>
-              <button className="bg-white cursor-pointer" onClick={() => handleDeleteFromCheckoutCart(checkoutProduct)}>Delete</button>
+              <button className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100 cursor-pointer" onClick={() => handleDeleteFromCheckoutCart(checkoutProduct)}>Delete</button>
             </div>)}
         </div>
         <div
