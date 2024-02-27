@@ -27,7 +27,7 @@ export async function DELETE(req:Request){
             if(x.id === product.id && x.stickerName === product.stickerName && x.stickerPrice === product.stickerPrice){
                 itemCopy = x
             }
-            return x
+            return x;
         });
         checkoutCart.splice(checkoutCart.indexOf(itemCopy),1);// deletes the specific item out of the array //
         return new Response(JSON.stringify(itemCopy));

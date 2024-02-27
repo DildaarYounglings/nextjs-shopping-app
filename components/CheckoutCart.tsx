@@ -12,9 +12,7 @@ function CheckoutCart() {
     const response = await fetch("/api/checkout", {
       method:'DELETE',
       body: JSON.stringify({...checkoutProduct}),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers:{"Content-Type":"application/json",},
     });
     const data = await response.json;
   }
@@ -39,6 +37,7 @@ function CheckoutCart() {
           style={{ padding: "0.5rem 1.5rem" }}
         >
           <span
+            onMouseOver={(e) => {e.preventDefault()}}
             className={"rounded-full cursor-pointer"}
             style={{
               border: "1px solid rgba(134,239,172,1)",
