@@ -1,28 +1,11 @@
 "use client";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const [windowDimensions, setWindowDimensions] = useState({
-    height: 0,
-    width: 0,
-  });
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWindowDimensions({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
-    });
-    return () => {
-      window.removeEventListener("resize", () => {
-        setWindowDimensions((p) => {
-          return { ...p };
-        });
-      });
-    };
-  }, []);
+  const {windowDimensions} = useWindowDimensions()
   if (windowDimensions.width >= 600) {
     return (
       <div

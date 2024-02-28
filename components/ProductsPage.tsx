@@ -1,24 +1,18 @@
 "use client";
 
 import { Product } from "@/app/api/products/data";
+import { useGET } from "@/hooks/useGET";
+import { useFetch } from "@/hooks/useFetch";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import React, { useEffect, useState } from "react";
 
 const ProductsPage = () => {
-  const [productsArray, setProductsArray] = useState<Product[]>([]);
-  useEffect(()=>{
-    fetch("/api/products/").then((res:Response) => res.json()).then((d:Product[]) => setProductsArray(d)).catch((err) => console.log(err));
-  },[])
+  const {windowDimensions} = useWindowDimensions();
+  const {variable:productsArray} = useGET("/api/products/")
   const handleSendToCheckout = async function(product:Product){
-    const response = await fetch("/api/checkout", {
-      method:'POST',
-      body: JSON.stringify({...product}),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json;
+    useFetch({url:"/api/checkout",method:'POST'},product);
   }
-  if (window.innerWidth <= 500) {
+  if (windowDimensions.width <= 500) {
     return (
       <div className="flex gap-10" style={{ width: "1fr" }}>
         {productsArray.length > 0 &&(
