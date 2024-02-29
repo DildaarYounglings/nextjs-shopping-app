@@ -68,5 +68,4 @@ function CheckoutCart() {
     </div>
   );
 }
-
 export default CheckoutCart;
