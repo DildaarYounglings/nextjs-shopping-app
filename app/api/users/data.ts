@@ -21,18 +21,7 @@ export let usersDatabase:User[] = [
         LastEdited:"",
     },
 ]
-export function new_User_POST_apiRoute(userOfTypeFrontend:User):User{
-    return {
-        id:Date.now(),
-        username: userOfTypeFrontend.username,
-        email:userOfTypeFrontend.email,
-        password:userOfTypeFrontend.password,
-        profilePic:userOfTypeFrontend.profilePic,
-        isEditing: userOfTypeFrontend.isEditing,
-        firstCreated:userOfTypeFrontend.firstCreated,
-        LastEdited:userOfTypeFrontend.LastEdited,
-    };
-}
+
 export let LoggedInUser:User[];
 export function checkAllUsersForThisUser(user:User){
     let d:User;
