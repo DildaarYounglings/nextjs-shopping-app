@@ -5,12 +5,23 @@ export type User = {
     password: string,
     profilePic: string,
     isEditing: boolean,
-    firstCreated:string;
-    LastEdited:Date
+    firstCreated:string,
+    LastEdited:string,
 }
 
-export let users:User[] = []
-export function newUserOfTypeBackend_POST_apiRoute(userOfTypeFrontend:User):User{
+export let usersDatabase:User[] = [
+    {
+        id:Date.now(),
+        username:"primedildaar",
+        email:"primedildaar2@gmail.com",
+        password:"password",
+        profilePic:"",
+        isEditing:false,
+        firstCreated:"",
+        LastEdited:"",
+    },
+]
+export function new_User_POST_apiRoute(userOfTypeFrontend:User):User{
     return {
         id:Date.now(),
         username: userOfTypeFrontend.username,
@@ -25,7 +36,7 @@ export function newUserOfTypeBackend_POST_apiRoute(userOfTypeFrontend:User):User
 export let LoggedInUser:User[];
 export function checkAllUsersForThisUser(user:User){
     let d:User;
-    users.map((x:User) => {
+    usersDatabase.map((x:User) => {
         if(x.username === user.username && x.email === user.email && x.password === user.password){
             d = x;
         }
@@ -37,18 +48,20 @@ export function checkAllUsersForThisUser(user:User){
 }
 export function login(user:User){
     let checkIfThereIsNoUserLoggedIn = false;
-    LoggedInUser.forEach((x:User) => {
-        if(x.email !== user.email && x.password !== user.password && x.username !== user.username){
-            checkIfThereIsNoUserLoggedIn = true
+    const ans = () => {
+        if(LoggedInUser.includes(user) === false){
+            return true;
         }
-    })
+        return false
+    };
+    checkIfThereIsNoUserLoggedIn = ans();
     if(checkIfThereIsNoUserLoggedIn && LoggedInUser.length === 0){
         LoggedInUser.push(user)
     }
 }
 export function logout(user:User){
-    let checkIfThereIsUserLoggedIn = false;
-    LoggedInUser.forEach((x:User) => {
+    let checkIfThereIsUserLoggedIn = false;// this becoms true//
+    LoggedInUser.forEach((x:User) => {// this is the loop function that is checking all items in array //
         if(x.email === user.email && x.password === user.password && x.username === user.username){
             checkIfThereIsUserLoggedIn = true;
         }
