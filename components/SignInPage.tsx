@@ -14,8 +14,16 @@ const SignInPage = function(){
             LastEdited:Date()
         }
     )
-    function handleChangeInputFields(){
-
+    function handleChangeInputFields(e:any){
+        const {name,value} = e.target
+        setFormData(
+            (f) => (
+                {
+                    ...f,
+                    [name] : value
+                }
+            )
+        )
     }
   return (
     <React.Fragment>
@@ -24,15 +32,15 @@ const SignInPage = function(){
         </div>
         <div className="flex flex-col">
             <label htmlFor="username">enter username</label>
-            <input type="text" id="username" onChange={handleChangeInputFields} value={formData.username}/>
+            <input type="text" name="username" id="username" onChange={(e) => handleChangeInputFields(e)} value={formData.username}/>
         </div>
         <div className="flex flex-col">
             <label htmlFor="email">enter email</label>
-            <input type="email" id="email" onChange={handleChangeInputFields} value={formData.email}/>
+            <input type="email" name="email" id="email" onChange={(e) => handleChangeInputFields(e)} value={formData.email}/>
         </div>
         <div className="flex flex-col">
             <label htmlFor="password">enter password</label>
-            <input type="email" id="password" onChange={handleChangeInputFields} value={formData.password}/>
+            <input type="text" name="password" id="password" onChange={(e) => handleChangeInputFields(e)} value={formData.password}/>
         </div>
     </React.Fragment>
   )
