@@ -14,6 +14,9 @@ const SignInPage = function(){
             LastEdited:Date()
         }
     )
+    function handleSubmit(e:React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
+    }
     function handleChangeInputFields(e:any){
         const {name,value} = e.target
         setFormData(
@@ -26,7 +29,7 @@ const SignInPage = function(){
         )
     }
   return (
-    <React.Fragment>
+    <form onSubmit={(e) => handleSubmit(e)} className="bg-white p-7">
         <div className="flex flex-col">
             <img src={formData.profilePic}/>
         </div>
@@ -42,7 +45,8 @@ const SignInPage = function(){
             <label htmlFor="password">enter password</label>
             <input type="text" name="password" id="password" onChange={(e) => handleChangeInputFields(e)} value={formData.password}/>
         </div>
-    </React.Fragment>
+        <button type="submit">submit</button>
+    </form>
   )
 }
 export default SignInPage
