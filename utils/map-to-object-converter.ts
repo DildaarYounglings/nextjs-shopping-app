@@ -1,9 +1,9 @@
 export class MapToObjectConverter<K,V>{
+    obj:any = {}
     ConvertToObject(map:Map<K,V>){
-        const obj:Record<string,V> = {};
         map.forEach((value,key) => {
-            obj[String(key)]= value;
+            this.obj[key]= value;
         })
-        return obj
+        return this.obj
     }
 }
