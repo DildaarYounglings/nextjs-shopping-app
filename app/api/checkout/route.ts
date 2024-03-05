@@ -23,12 +23,11 @@ export async function DELETE(req:Request){
     if(req.method === "DELETE"){
         const product:CheckoutProduct= await req.json();// this product comes from the frontend//
         let itemCopy:CheckoutProduct = checkoutCart[checkoutCart.indexOf(product)];
-        checkoutCart.map((x) => {
-                if(x.id === product.id && x.stickerName === product.stickerName && x.stickerPrice === product.stickerPrice){
-                    itemCopy = x
-                }
-                return x;
-            });
+        checkoutCart.forEach((x) => {
+            if(x.id === product.id && x.stickerName === product.stickerName && x.stickerPrice === product.stickerPrice){
+                itemCopy = x;
+            }
+        });
             checkoutCart.splice(checkoutCart.indexOf(itemCopy),1);// deletes the specific item out of the array //
             return new Response(JSON.stringify(itemCopy));
     }
