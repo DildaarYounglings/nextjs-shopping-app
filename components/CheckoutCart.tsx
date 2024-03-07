@@ -1,5 +1,6 @@
 "use client";
 import { CheckoutProduct } from "@/app/api/checkout/data";
+import { useFetch } from "@/hooks/useFetch";
 import React, { useEffect, useState } from "react";
 
 function CheckoutCart() {
@@ -23,12 +24,12 @@ function CheckoutCart() {
           className="fixed right-3 flex flex-col"
           style={{ bottom: "4rem",backgroundColor:"darkcyan",height:"fit-content",width:"200px",padding:"1rem",gap:"1rem"}}
         >
-          <div className="flex" style={{gap:"2rem"}}><button onClick={()=>{setIsCheckoutCartOpen(false)}}>X</button><button onChange={() => handleDeleteFromCheckoutCart({id:Date.now(),stickerName:"",stickerPrice:0},"delete all")} style={{backgroundColor:"red"}}>🗑️</button></div>
+          <div className="flex" style={{gap:"2rem"}}><button onClick={()=>{setIsCheckoutCartOpen(false)}}>X</button><button style={{backgroundColor:"red"}}>🗑️</button></div>
           {checkoutCart.length > 0 &&
             checkoutCart.map((checkoutProduct, index) => <div className="bg-white cursor-pointer" style={{padding:"1rem",border:"1px solid black"}} key={index}>
               <p className="bg-white cursor-pointer">{checkoutProduct.stickerName}</p>
               <p className="bg-white cursor-pointer">{checkoutProduct.stickerPrice}</p>
-              <button className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100 cursor-pointer">Delete</button>
+              <button onClick={() => handleDeleteFromCheckoutCart(checkoutProduct)} className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100 cursor-pointer">Delete</button>
             </div>)}
         </div>
         <div

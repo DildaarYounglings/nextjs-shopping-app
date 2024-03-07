@@ -9,6 +9,3 @@ export type CheckoutProduct = {
     mode:string
 }
 export let checkoutCart:CheckoutProduct[] = [];
-export function setCheckoutCart(array:CheckoutProduct[]){
-    checkoutCart = array;
-}

@@ -10,4 +10,5 @@ export const useFetch = async function(fetchOptions:FetchOptions,product:any){
         },
       });
     const data = await response.json;
+    return data;
 }
