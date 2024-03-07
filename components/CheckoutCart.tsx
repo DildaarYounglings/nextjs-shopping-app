@@ -9,13 +9,8 @@ function CheckoutCart() {
   useEffect(() => {
     fetch("/api/checkout").then(res => res.json()).then(data => setCheckoutCart(data));
   }, [checkoutCart]);
-  async function handleDeleteFromCheckoutCart(checkoutProduct: CheckoutProduct){
-    const response = await fetch("/api/checkout", {
-      method:'DELETE',
-      body: JSON.stringify(checkoutProduct),
-      headers:{"Content-Type":"application/json",},
-    });
-    const data = await response.json;
+  async function handleDeleteFromCheckoutCart(checkoutProduct:any){
+    const data = await useFetch({url:"/api/checkout",method:'DELETE'},checkoutCart);
   }
   if (isCheckoutCartOpen) {
     return (
@@ -24,7 +19,7 @@ function CheckoutCart() {
           className="fixed right-3 flex flex-col"
           style={{ bottom: "4rem",backgroundColor:"darkcyan",height:"fit-content",width:"200px",padding:"1rem",gap:"1rem"}}
         >
-          <div className="flex" style={{gap:"2rem"}}><button onClick={()=>{setIsCheckoutCartOpen(false)}}>X</button><button style={{backgroundColor:"red"}}>🗑️</button></div>
+          <div className="flex" style={{gap:"2rem"}}><button onClick={()=>{setIsCheckoutCartOpen(false)}}>X</button><button onClick={() => handleDeleteFromCheckoutCart("Delete All")} style={{backgroundColor:"red"}}>🗑️</button></div>
           {checkoutCart.length > 0 &&
             checkoutCart.map((checkoutProduct, index) => <div className="bg-white cursor-pointer" style={{padding:"1rem",border:"1px solid black"}} key={index}>
               <p className="bg-white cursor-pointer">{checkoutProduct.stickerName}</p>

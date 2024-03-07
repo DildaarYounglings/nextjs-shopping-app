@@ -18,11 +18,13 @@ export async function POST(req:Request){
 }
 export async function DELETE(req:Request){
     if(req.method === 'DELETE'){
-        const product:CheckoutProduct= await req.json();// this product comes from the frontend//
+        const product:any = await req.json();// this product comes from the frontend//
         let copyProduct:CheckoutProduct = checkoutCart[checkoutCart.indexOf(product)]
         checkoutCart.forEach((item:CheckoutProduct) => {
-            if(item.stickerName === copyProduct.stickerName && item.stickerPrice === copyProduct.stickerPrice){
+            if(item.stickerName === product.stickerName && item.stickerPrice === product.stickerPrice){
                 copyProduct = item
+            }else{
+                checkoutCart.splice(0,checkoutCart.length);
             }
         })
         checkoutCart.splice(checkoutCart.indexOf(copyProduct),1);
