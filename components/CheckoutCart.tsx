@@ -12,7 +12,7 @@ function CheckoutCart() {
   async function handleDeleteFromCheckoutCart(checkoutProduct: CheckoutProduct){
     const response = await fetch("/api/checkout", {
       method:'DELETE',
-      body: JSON.stringify({...checkoutProduct}),
+      body: JSON.stringify(checkoutProduct),
       headers:{"Content-Type":"application/json",},
     });
     const data = await response.json;
