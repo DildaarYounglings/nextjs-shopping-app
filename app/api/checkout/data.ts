@@ -8,4 +8,7 @@ export type CheckoutProduct = {
     stickerPrice:number,
     mode:string
 }
-export let checkoutCart:CheckoutProduct[] = []
+export let checkoutCart:CheckoutProduct[] = [];
+export function setCheckoutCart(array:CheckoutProduct[]){
+    checkoutCart = array;
+}
