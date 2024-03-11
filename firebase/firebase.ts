@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import firebase from "firebase/compat/app";
+import { exportTraceState } from "next/dist/trace";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,8 +19,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const analytics = getAnalytics(firebaseApp);
-export {db,auth};
+
+
+function authorisation(data:any){
+  auth.createUserWithEmailAndPassword(data.email,data.password).then(user => console.log(user)).catch(err => console.log(err));
+};
+export function logAuthToConsole(){
+  console.log(firebase.auth());
+}

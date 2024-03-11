@@ -1,7 +1,7 @@
 'use client'
-import React, { useState } from 'react'
-import { User } from '@/app/api/users/data'
-import { auth } from '@/firebase/firebase'
+import React, { useState } from 'react';
+import { User } from '@/app/api/users/data';
+import {logAuthToConsole} from '@/firebase/firebase';
 const SignInPage = function(){
     const [formData,setFormData] = useState<User>(
         {
@@ -17,7 +17,7 @@ const SignInPage = function(){
     )
     function handleSubmit(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        auth.createUserWithEmailAndPassword(formData.email,formData.password).then(user => console.log(user)).catch(err => console.log(err));
+        logAuthToConsole();
     }
     function handleChangeInputFields(e:any){
         const {name,value} = e.target
