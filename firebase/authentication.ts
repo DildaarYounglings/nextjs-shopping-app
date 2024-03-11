@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import firebase from "firebase/compat/app";
 import { exportTraceState } from "next/dist/trace";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,7 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig,"my app")
 const app = firebaseApp as firebase.app.App;
-let auth = firebase.auth(app);
+let auth = getAuth(app);
 
 
 function authorisation(data:any){
