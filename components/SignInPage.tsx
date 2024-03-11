@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { User } from '@/app/api/users/data'
+import { auth } from '@/firebase/firebase'
 const SignInPage = function(){
     const [formData,setFormData] = useState<User>(
         {
@@ -16,6 +17,7 @@ const SignInPage = function(){
     )
     function handleSubmit(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();
+        auth.createUserWithEmailAndPassword(formData.email,formData.password).then(user => console.log(user)).catch(err => console.log(err));
     }
     function handleChangeInputFields(e:any){
         const {name,value} = e.target
@@ -29,7 +31,7 @@ const SignInPage = function(){
         )
     }
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="bg-white p-7">
+    <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => handleSubmit(e)} className="bg-white p-7">
         <div className="flex flex-col">
             <img src={formData.profilePic}/>
         </div>
