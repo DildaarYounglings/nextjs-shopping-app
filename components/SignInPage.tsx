@@ -43,9 +43,12 @@ const SignInPage = function(){
         </div>
         <div className="flex flex-col">
             <label htmlFor="password">enter password</label>
-            <input type="text" name="password" id="password" onChange={(e) => handleChangeInputFields(e)} value={formData.password}/>
+            <input type="password" name="password" id="password" onChange={(e) => handleChangeInputFields(e)} value={formData.password}/>
         </div>
         <button type="submit">submit</button>
+        <div>
+            
+        </div>
     </form>
   )
 }
