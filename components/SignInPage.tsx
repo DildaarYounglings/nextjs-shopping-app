@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { User } from '@/app/api/users/data';
-import {logAuthToConsole} from '@/firebase/firebase';
+import {logAuthToConsole} from '@/firebase/authentication';
 const SignInPage = function(){
     const [formData,setFormData] = useState<User>(
         {

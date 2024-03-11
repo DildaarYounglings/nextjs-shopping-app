@@ -19,13 +19,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const firebaseApp = initializeApp(firebaseConfig,"my app")
+const app = firebaseApp as firebase.app.App;
+let auth = firebase.auth(app);
 
 
 function authorisation(data:any){
-  auth.createUserWithEmailAndPassword(data.email,data.password).then(user => console.log(user)).catch(err => console.log(err));
+  //(firebase.auth()).createUserWithEmailAndPassword(data.email,data.password).then(user => console.log(user)).catch(err => console.log(err));
 };
 export function logAuthToConsole(){
-  console.log(firebase.auth());
+  console.log(app);
+  console.log(auth);
 }
