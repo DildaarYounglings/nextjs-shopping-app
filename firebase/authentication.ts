@@ -30,4 +30,3 @@ function mustGetUser(){
   return container;
 }
 const user = mustGetUser();
-deleteUser(user);
