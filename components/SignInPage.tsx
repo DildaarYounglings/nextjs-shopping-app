@@ -19,7 +19,7 @@ const SignInPage = function(){
     )
     function handleSubmit(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        createUserWithEmailAndPassword(auth,formData.email,formData.password);
+        signInWithEmailAndPassword(auth,formData.email,formData.password);
     }
     function handleChangeInputFields(e:any){
         const {name,value} = e.target
@@ -51,7 +51,7 @@ const SignInPage = function(){
         </div>
         <button type="submit">submit</button>
         <div>
-            <a onMouseLeave={(e)=>{setFormData((f:any)=>({...f,anchorTagStyles:{color:"black",cursor:"pointer"}}))}} onMouseEnter={(e) => {setFormData((f:any)=>({...f,anchorTagStyles:{textDecoration:"underline",textDecorationColor:"blue",color:"blue",cursor:"pointer"}}))}} style={formData.anchorTagStyles}>don't have a account to create one with us just enter your details above and click here</a>
+            <a onClick={() =>{createUserWithEmailAndPassword(auth,formData.email,formData.password)}} onMouseLeave={(e)=>{setFormData((f:any)=>({...f,anchorTagStyles:{color:"black",cursor:"pointer"}}))}} onMouseEnter={(e) => {setFormData((f:any)=>({...f,anchorTagStyles:{textDecoration:"underline",textDecorationColor:"blue",color:"blue",cursor:"pointer"}}))}} style={formData.anchorTagStyles}>don't have a account to create one with us just enter your details above and click here</a>
         </div>
     </form>
   )
