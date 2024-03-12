@@ -26,7 +26,7 @@ const app = firebaseApp as firebase.app.App;
 export const auth = getAuth(app);
 function mustGetUser(){
   const container = auth.currentUser;
-  if(!container) throw new Error("function failed to return user")
+  if(!container) throw new Error("function failed to return user it is possible that no user was created or signed in")
   return container;
 }
 const user = mustGetUser();
