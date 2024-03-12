@@ -3,7 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import firebase from "firebase/compat/app";
 import { exportTraceState } from "next/dist/trace";
-import {getAuth} from "firebase/auth";
+import {User, deleteUser, getAuth} from "firebase/auth";
+import { use } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,3 +24,10 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig,"my app")
 const app = firebaseApp as firebase.app.App;
 export const auth = getAuth(app);
+function mustGetUser(){
+  const container = auth.currentUser;
+  if(!container) throw new Error("function failed to return user")
+  return container;
+}
+const user = mustGetUser();
+deleteUser(user);
