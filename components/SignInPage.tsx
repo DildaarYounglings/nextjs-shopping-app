@@ -8,26 +8,14 @@ import {
 } from "firebase/auth";
 import useChangeStyles from "@/hooks/useChangeStyles";
 type FormState = {
-  id: number;
-  username: string;
   email: string;
   password: string;
-  profilePic: string;
-  isEditing: boolean;
-  firstCreated: Date | string;
-  LastEdited: Date | string;
   isPasswordHidden:boolean;
 };
 const SignInPage = function () {
   const [formData, setFormData] = useState<FormState>({
-    id: Date.now(),
-    username: "",
     email: "",
     password: "",
-    profilePic: "",
-    isEditing: false,
-    firstCreated: Date(),
-    LastEdited: Date(),
     isPasswordHidden:true,
   });
   const { elementStyle, setElementStyle } = useChangeStyles();
@@ -54,19 +42,6 @@ const SignInPage = function () {
       className="bg-white p-3 flex flex-col gap-2"
     >
       <div className="flex flex-col">
-        <img src={formData.profilePic} />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="username">enter username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          onChange={(e) => handleChangeInputFields(e)}
-          value={formData.username}
-        />
-      </div>
-      <div className="flex flex-col">
         <label htmlFor="email">enter email</label>
         <input
           type="email"
@@ -87,7 +62,7 @@ const SignInPage = function () {
                 onChange={(e) => handleChangeInputFields(e)}
                 value={formData.password}
             />
-            <button onClick={()=>handleViewOrHidePassword()}>{formData.isPasswordHidden? "👁️" : "😉"}</button>
+            <button onClick={() => handleViewOrHidePassword()}>{formData.isPasswordHidden? "👁️" : "😉"}</button>
         </div>
       </div>
       <button type="submit">submit</button>
