@@ -16,7 +16,7 @@ type FormState = {
   isEditing: boolean;
   firstCreated: Date | string;
   LastEdited: Date | string;
-  isPasswordHiden: false;
+  isPasswordHidden:boolean;
 };
 const SignInPage = function () {
   const [formData, setFormData] = useState<FormState>({
@@ -28,7 +28,7 @@ const SignInPage = function () {
     isEditing: false,
     firstCreated: Date(),
     LastEdited: Date(),
-    isPasswordHiden: false,
+    isPasswordHidden:true,
   });
   const { elementStyle, setElementStyle } = useChangeStyles();
   function handleCreateEmailWithPassword() {
@@ -38,17 +38,20 @@ const SignInPage = function () {
     e.preventDefault();
     signInWithEmailAndPassword(auth, formData.email, formData.password);
   }
-  function handleChangeInputFields(e: any) {
-    const { name, value } = e.target;
-    setFormData((f: FormState) => ({
-      ...f,
-      [name]: value,
-    }));
-  }
+    function handleChangeInputFields(e: any) {
+        const { name, value } = e.target;
+        setFormData((f: FormState) => ({
+            ...f,
+            [name]: value,
+        }));
+    }
+    function handleViewOrHidePassword(){
+        setFormData((f:any) => ({...f,isPasswordHidden:!f.isPasswordHidden}));
+    }
   return (
     <form
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}
-      className="bg-white p-7"
+      className="bg-white p-3 flex flex-col gap-2"
     >
       <div className="flex flex-col">
         <img src={formData.profilePic} />
@@ -75,34 +78,44 @@ const SignInPage = function () {
       </div>
       <div className="flex flex-col">
         <label htmlFor="password">enter password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          onChange={(e) => handleChangeInputFields(e)}
-          value={formData.password}
-        />
+        <div className="flex flex-row ">
+            <input
+                className="w-full"
+                type={formData.isPasswordHidden? "password" : "text"}
+                name="password"
+                id="password"
+                onChange={(e) => handleChangeInputFields(e)}
+                value={formData.password}
+            />
+            <button onClick={()=>handleViewOrHidePassword()}>{formData.isPasswordHidden? "👁️" : "😉"}</button>
+        </div>
       </div>
       <button type="submit">submit</button>
-      <div>
+      <div className="w-1/2 h-fit">
         <a
           onClick={(e) => handleCreateEmailWithPassword()}
           onMouseLeave={(e) => {
-            setElementStyle((style: any) => ({
-              ...style,
-              anchorTagStyles: { color: "black", cursor: "pointer" },
-            }));
+            setElementStyle({
+                color: "black",
+                cursor: "pointer",
+                width:"fit-content",
+                wordWrap:"break-word",
+                overflowWrap:"break-word",
+                transition:"0s",
+            });
           }}
           onMouseEnter={(e) => {
-            setElementStyle((style: any) => ({
-              ...style,
-              anchorTagStyles: {
+            setElementStyle({
                 textDecoration: "underline",
                 textDecorationColor: "blue",
                 color: "blue",
                 cursor: "pointer",
-              },
-            }));
+                width:"fit-content",
+                wordWrap:"break-word",
+                overflowWrap:"break-word",
+                transition:"0.5s",
+            
+            });
           }}
           style={elementStyle}
         >
