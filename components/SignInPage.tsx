@@ -1,9 +1,10 @@
 'use client'
 import React, { useState } from 'react';
 import { User } from '@/app/api/users/data';
-import {logAuthToConsole} from '@/firebase/authentication';
+import {auth} from '@/firebase/authentication';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 const SignInPage = function(){
-    const [formData,setFormData] = useState<User>(
+    const [formData,setFormData] = useState<User|any>(
         {
             id:Date.now(),
             username:"",
@@ -12,12 +13,13 @@ const SignInPage = function(){
             profilePic:"",
             isEditing:false,
             firstCreated:Date(),
-            LastEdited:Date()
+            LastEdited:Date(),
+            anchorTagStyles:{transitionDelay:"1s"},
         }
     )
     function handleSubmit(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        logAuthToConsole();
+        createUserWithEmailAndPassword(auth,formData.email,formData.password);
     }
     function handleChangeInputFields(e:any){
         const {name,value} = e.target
@@ -49,7 +51,7 @@ const SignInPage = function(){
         </div>
         <button type="submit">submit</button>
         <div>
-            
+            <a onMouseLeave={(e)=>{setFormData((f:any)=>({...f,anchorTagStyles:{color:"black",cursor:"pointer"}}))}} onMouseEnter={(e) => {setFormData((f:any)=>({...f,anchorTagStyles:{textDecoration:"underline",textDecorationColor:"blue",color:"blue",cursor:"pointer"}}))}} style={formData.anchorTagStyles}>don't have a account to create one with us just enter your details above and click here</a>
         </div>
     </form>
   )
