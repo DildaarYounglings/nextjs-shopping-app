@@ -5,6 +5,7 @@ import firebase from "firebase/compat/app";
 import { exportTraceState } from "next/dist/trace";
 import {User, deleteUser, getAuth} from "firebase/auth";
 import { use } from "react";
+import { mustGetValue } from "@/utils/must-get-value";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,14 +20,8 @@ const firebaseConfig = {
   appId: "1:68973032878:web:446a37ee3ab6f3a57dc43f",
   measurementId: "G-WPT1MW0PQJ"
 };
-
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig,"my app")
-const app = firebaseApp as firebase.app.App;
+export const app = firebaseApp as firebase.app.App;
 export const auth = getAuth(app);
-function mustGetUser(){
-  const container = auth.currentUser;
-  if(!container) throw new Error("function failed to return user it is possible that no user was created or signed in")
-  return container;
-}
-const user = mustGetUser();
+export const user = mustGetValue<typeof auth.currentUser>(auth.currentUser);
