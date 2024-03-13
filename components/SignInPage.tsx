@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { User } from "@/app/api/users/data";
-import { auth } from "@/firebase/authentication";
+import { auth, user } from "@/firebase/authentication";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -81,14 +81,14 @@ const SignInPage = function () {
           }}
           onMouseEnter={(e) => {
             setElementStyle({
-                textDecoration: "underline",
-                textDecorationColor: "blue",
-                color: "blue",
-                cursor: "pointer",
-                width:"fit-content",
-                wordWrap:"break-word",
-                overflowWrap:"break-word",
-                transition:"0.5s",
+              textDecoration: "underline",
+              textDecorationColor: "blue",
+              color: "blue",
+              cursor: "pointer",
+              width:"fit-content",
+              wordWrap:"break-word",
+              overflowWrap:"break-word",
+              transition:"0.5s",
             
             });
           }}

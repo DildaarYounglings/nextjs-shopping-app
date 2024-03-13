@@ -5,7 +5,7 @@ import firebase from "firebase/compat/app";
 import { exportTraceState } from "next/dist/trace";
 import {User, deleteUser, getAuth} from "firebase/auth";
 import { use } from "react";
-import { mustGetValue } from "@/utils/must-get-value";
+import { mustGetValue, mustGetValueAsync } from "@/utils/must-get-value";
 import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,6 +23,13 @@ import { getFirestore } from "firebase/firestore";
     measurementId: "G-WPT1MW0PQJ"
   };
 */
+
+
+
+
+
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyBvK78-xcR9dtiZ-jBfI5Mp3vTF9uqfuJs",
   authDomain: "shopping-app-nextjs.firebaseapp.com",
@@ -37,4 +44,4 @@ const firebaseApp = initializeApp(firebaseConfig,"my app")
 export const app = firebaseApp as firebase.app.App;
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const user = mustGetValue<typeof auth.currentUser>(auth.currentUser);
+export const user = (mustGetValueAsync<typeof auth.currentUser>(auth.currentUser)).then(result => result);
