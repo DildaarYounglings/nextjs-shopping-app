@@ -1,10 +1,12 @@
 "use client";
 import { userProfileState } from "@/hooks/useStateGlobal";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 export const UserProfilePage = function () {
   const allUserProfileState = userProfileState();
   const [isFileInput, setIsFileInput] = useState<boolean>(false);
+  const fileInputRef = useRef<any>();
+  const file = useRef();
   function handleChange(e: any) {
     const { name, value } = e.target;
     allUserProfileState.setState((a) => {
@@ -14,7 +16,10 @@ export const UserProfilePage = function () {
   function handleToggleImageOrFile() {
     setIsFileInput((f) => (!f));
   }
-
+  function handleGetFile(){
+    console.log(fileInputRef.current);
+  }
+  handleGetFile();
   return (
     <section className="p-4 flex flex-col gap-4 w-full  content-center items-center align-middle">
       <div>
@@ -26,7 +31,7 @@ export const UserProfilePage = function () {
             alt="UserProfilePic"
           />
         ) : (
-          <input type="file" />
+          <input ref={fileInputRef} type="file" />
         )}
       </div>
       <div className="flex flex-col gap-4">
