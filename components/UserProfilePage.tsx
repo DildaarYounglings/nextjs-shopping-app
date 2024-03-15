@@ -1,21 +1,33 @@
 "use client";
 import { userProfileState } from "@/hooks/useStateGlobal";
-import React from "react";
+import React, { useState } from "react";
 
 export const UserProfilePage = function () {
   const allUserProfileState = userProfileState();
-  function handleChange(e:any) {
+  const [isFileInput, setIsFileInput] = useState<boolean>(false);
+  function handleChange(e: any) {
     const { name, value } = e.target;
-    allUserProfileState.setState((a) => {return{...a, [name]:value}});
+    allUserProfileState.setState((a) => {
+      return { ...a, [name]: value };
+    });
   }
+  function handleToggleImageOrFile() {
+    setIsFileInput((f) => (!f));
+  }
+
   return (
-    <section className="p-4 flex flex-col gap-4 w-full bg-white content-center items-center align-middle">
+    <section className="p-4 flex flex-col gap-4 w-full  content-center items-center align-middle">
       <div>
-        <img
-          className="rounded-full w-40"
-          src={allUserProfileState.state.imgSrc}
-          alt="UserProfilePic"
-        />
+        {isFileInput ? (
+          <img
+            onClick={() => handleToggleImageOrFile()}
+            className="rounded-full w-40"
+            src={allUserProfileState.state.imgSrc}
+            alt="UserProfilePic"
+          />
+        ) : (
+          <input type="file" />
+        )}
       </div>
       <div className="flex flex-col gap-4">
         {allUserProfileState.state.isEditingUsername === false ? (
@@ -107,7 +119,7 @@ export const UserProfilePage = function () {
               onClick={() => {
                 allUserProfileState.setState((a) => ({
                   ...a,
-                  isEditingEmail:!allUserProfileState.state.isEditingEmail,
+                  isEditingEmail: !allUserProfileState.state.isEditingEmail,
                 }));
               }}
             >

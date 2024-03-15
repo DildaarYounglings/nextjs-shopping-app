@@ -1,3 +1,4 @@
+import { uploadBytes } from 'firebase/storage'
 import React, { useState } from 'react'
 
 function useStateGlobal<T>(initial:T){
