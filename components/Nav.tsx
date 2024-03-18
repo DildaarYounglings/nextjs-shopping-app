@@ -49,6 +49,18 @@ function Nav() {
               >
                 Products
               </Link>
+              <Link
+                style={{
+                  backgroundColor: "lightcyan",
+                  width: "1fr",
+                  height: "fit-content",
+                  padding: "0.7rem",
+                  textAlign: "center",
+                }}
+                href="/userProfile"
+              >
+                user Profile
+              </Link>
               <div
                 style={{
                   color: "white",

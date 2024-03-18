@@ -59,7 +59,7 @@ export const UserProfilePage = function () {
               }));
             }}
           >
-            {allUserProfileState.state.email} ✏️
+            {allUserProfileState.state.username} ✏️
           </label>
         ) : (
           <span className="p-4 flex gap-4">
