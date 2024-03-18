@@ -1,1 +1,4 @@
-export const formDataArray:FormData[] = [];
+export type FormDataItem = {
+
+}
+export const formDataArray:[] = [];
