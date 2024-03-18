@@ -9,7 +9,7 @@ export async function POST(req:Request){
 }
 export async function DELETE(req:Request){
     if(req.method === 'DELETE'){
-        const FormDataToBeDeleted:FormData = await req.json();// this comes from the frontend
+        const FormDataToBeDeleted = await req.json();// this comes from the frontend
         let formDataItem = formDataArray[formDataArray.indexOf(FormDataToBeDeleted)];
         return new Response(JSON.stringify(formDataArray));
     }
