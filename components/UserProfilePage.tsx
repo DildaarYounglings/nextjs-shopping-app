@@ -7,22 +7,25 @@ export const UserProfilePage = function () {
   const [isFileInput, setIsFileInput] = useState<boolean>(false);
   const fileInputRef = useRef<any>();
   const [file, setFile] = useState<File>();
-  function handleChange(e: any) {
+  function handleChange(e: any){
     const { name, value } = e.target;
-    allUserProfileState.setState((a) => {
+    allUserProfileState.setState((a)=>{
       return { ...a, [name]: value };
     });
   }
   function handleToggleImageOrFile() {
     setIsFileInput((f) => !f);
   }
-  function handleGetFile() {
-    console.log(fileInputRef.current);
-  }
-  handleGetFile();
-  function handleChangeImageToAnother(e: FormEvent<HTMLFormElement>): void {
+  async function handleChangeImageToAnother(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
     if(!file)return;
+    try {
+      const data = new FormData();
+      data.set("file",file);
+      const res = await fetch("api route",{method})    
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -38,7 +41,7 @@ export const UserProfilePage = function () {
         </div>
       ) : (
         <form onSubmit={e => handleChangeImageToAnother(e)}>
-          <input ref={fileInputRef} type="file" onChange={e => setFile(e.target.files?.[0])} />
+          <input type="file" onChange={e => setFile(e.target.files?.[0])} />
           <input type="submit" value="Upload" />
         </form>
       )}
