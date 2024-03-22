@@ -3,6 +3,7 @@ import { formDataArray } from "@/app/api/form/data";
 import { userProfileState } from "@/hooks/useStateGlobal";
 import React, { FormEvent, useState } from "react";
 import { json } from "stream/consumers";
+import { URL } from "url";
 
 export const UserProfilePage = function () {
   const allUserProfileState = userProfileState();
@@ -21,10 +22,11 @@ export const UserProfilePage = function () {
     e.preventDefault();
     if(!file)return;
     try {
-      const data = new FormData(e.currentTarget);
-      data.set("file",file);
-      const formDataObject = Object.entries(data.entries);
-      const res = await fetch("api route",{method:'POST',body:JSON.stringify(formDataObject)});
+      const data = file;
+      //const res = await fetch("api route",{method:'POST',body:JSON.stringify(data)});
+      const url = URL.createObjectURL(data);
+      allUserProfileState.setState(a => ({...a,imgSrc:url}));
+
     } catch (err) {
       console.error(err)
     }
@@ -44,8 +46,7 @@ export const UserProfilePage = function () {
       ) : (
         <form onSubmit={e => handleChangeImageToAnother(e)}>
           <input type="file" onChange={e => setFile(e.target.files?.[0])} />
-          <input type="button" value="Cancel" onClick={() => handleToggleImageOrFile()}/>
-          <input type="submit" value="Upload" />
+          <input className="" type="button" value="Cancel" onClick={() => handleToggleImageOrFile()}/>
         </form>
       )}
 
