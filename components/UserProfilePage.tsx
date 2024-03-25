@@ -1,7 +1,6 @@
 "use client";
 import { formDataArray } from "@/app/api/form/data";
 import { userProfileState } from "@/hooks/useStateGlobal";
-import getDataUrl from "@/utils/getDataUrl";
 import React, { FormEvent, useState } from "react";
 import { json } from "stream/consumers";
 import { URL } from "url";
