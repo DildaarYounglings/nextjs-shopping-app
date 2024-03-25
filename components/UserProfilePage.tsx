@@ -24,11 +24,21 @@ export const UserProfilePage = function () {
     if(typeof file === 'undefined')return;
     try {
       const fileData = file;
-      const url = getDataUrl(fileData);
-      allUserProfileState.setState(a => ({...a,imgSrc:url}));
+      const reader = new FileReader();
+      let url;
+      reader.addEventListener("load",()=>{
+        allUserProfileState.setState((a)=>({...a,imgSrc:reader.result}))
+      })
+      reader.readAsDataURL(fileData);
+      if(!url)return;
+      if(typeof url === "string") return url;
+      allUserProfileState.setState(a => ({...a,imgSrc:""}));
 
     } catch (err) {
       console.error(err)
+    }
+    finally{
+      handleToggleImageOrFile();
     }
   }
 
@@ -47,6 +57,7 @@ export const UserProfilePage = function () {
         <form onSubmit={e => handleChangeImageToAnother(e)}>
           <input type="file" onChange={e => setFile(e.target.files?.[0])} />
           <input className="" type="button" value="Cancel" onClick={() => handleToggleImageOrFile()}/>
+          <input className="" type="submit" value="changeImage"/>
         </form>
       )}
 
