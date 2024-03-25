@@ -1,6 +1,7 @@
 "use client";
 import { formDataArray } from "@/app/api/form/data";
 import { userProfileState } from "@/hooks/useStateGlobal";
+import getDataUrl from "@/utils/getDataUrl";
 import React, { FormEvent, useState } from "react";
 import { json } from "stream/consumers";
 import { URL } from "url";
@@ -8,7 +9,7 @@ import { URL } from "url";
 export const UserProfilePage = function () {
   const allUserProfileState = userProfileState();
   const [isFileInput, setIsFileInput] = useState<boolean>(false);
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File|undefined>();
   function handleChange(e: any){
     const { name, value } = e.target;
     allUserProfileState.setState((a)=>{
@@ -20,11 +21,10 @@ export const UserProfilePage = function () {
   }
   async function handleChangeImageToAnother(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
-    if(!file)return;
+    if(typeof file === 'undefined')return;
     try {
-      const data = file;
-      //const res = await fetch("api route",{method:'POST',body:JSON.stringify(data)});
-      const url = URL.createObjectURL(data);
+      const fileData = file;
+      const url = getDataUrl(fileData);
       allUserProfileState.setState(a => ({...a,imgSrc:url}));
 
     } catch (err) {
