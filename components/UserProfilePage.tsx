@@ -24,14 +24,10 @@ export const UserProfilePage = function () {
     try {
       const fileData = file;
       const reader = new FileReader();
-      let url;
       reader.addEventListener("load",()=>{
         allUserProfileState.setState((a)=>({...a,imgSrc:reader.result}))
       })
       reader.readAsDataURL(fileData);
-      if(!url)return;
-      if(typeof url === "string") return url;
-      allUserProfileState.setState(a => ({...a,imgSrc:""}));
 
     } catch (err) {
       console.error(err)

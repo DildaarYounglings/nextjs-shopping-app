@@ -8,7 +8,7 @@ function useStateGlobal<T>(initial:T){
   )
 }
 type AllUserProfileState = {
-    imgSrc:string,
+    imgSrc:string|any,
     username:string,
     password:string
     email:string,
