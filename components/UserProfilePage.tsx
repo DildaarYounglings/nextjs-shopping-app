@@ -23,11 +23,11 @@ export const UserProfilePage = function () {
     if(typeof file === 'undefined')return;
     try {
       const fileData = file;
-      const reader = new FileReader();
-      reader.addEventListener("load",()=>{
-        allUserProfileState.setState((a)=>({...a,imgSrc:reader.result}))
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load",()=>{
+        allUserProfileState.setState((a)=>({...a,imgSrc:fileReader.result}))
       })
-      reader.readAsDataURL(fileData);
+      fileReader.readAsDataURL(fileData);
 
     } catch (err) {
       console.error(err)
@@ -39,7 +39,7 @@ export const UserProfilePage = function () {
 
   return (
     <section className="p-4 flex flex-col gap-4 w-full  content-center items-center align-middle">
-      {isFileInput ? (
+      {isFileInput === false ? (
         <div>
           <img
             onClick={() => handleToggleImageOrFile()}
@@ -49,10 +49,10 @@ export const UserProfilePage = function () {
           />
         </div>
       ) : (
-        <form onSubmit={e => handleChangeImageToAnother(e)}>
+        <form onSubmit={e => handleChangeImageToAnother(e)} className="flex gap-4">
           <input type="file" onChange={e => setFile(e.target.files?.[0])} />
-          <input className="" type="button" value="Cancel" onClick={() => handleToggleImageOrFile()}/>
-          <input className="" type="submit" value="changeImage"/>
+          <input className="p-3 bg-black text-white" type="button" value="Cancel" onClick={() => handleToggleImageOrFile()}/>
+          <input className="p-3 bg-black text-white" type="submit" value="save"/>
         </form>
       )}
 
