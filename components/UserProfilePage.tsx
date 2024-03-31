@@ -1,17 +1,34 @@
 "use client";
 import { formDataArray } from "@/app/api/form/data";
-import { userProfileState } from "@/hooks/useStateGlobal";
+
 import React, { FormEvent, useState } from "react";
 import { json } from "stream/consumers";
 import { URL } from "url";
 
+type allUserProfileState = {
+  username:string,
+  password:string,
+  email:string,
+  imgSrc:string|ArrayBuffer|null,
+  isEditingUsername:boolean,
+  isEditingPassword:boolean,
+  isEditingEmail:boolean,
+}
 export const UserProfilePage = function () {
-  const allUserProfileState = userProfileState();
+  const [UserProfileState,setUserProfileState] = useState<allUserProfileState>({
+    username:"",
+    password:"",
+    email:"",
+    imgSrc:"",
+    isEditingUsername:false,
+    isEditingPassword:false,
+    isEditingEmail:false,
+  })
   const [isFileInput, setIsFileInput] = useState<boolean>(false);
   const [file, setFile] = useState<File|undefined>();
   function handleChange(e: any){
     const { name, value } = e.target;
-    allUserProfileState.setState((a)=>{
+    setUserProfileState((a)=>{
       return { ...a, [name]: value };
     });
   }
@@ -25,7 +42,7 @@ export const UserProfilePage = function () {
       const fileData = file;
       const fileReader = new FileReader();
       fileReader.addEventListener("load",()=>{
-        allUserProfileState.setState((a)=>({...a,imgSrc:fileReader.result}))
+        setUserProfileState((a)=>({...a,imgSrc:fileReader.result}))
       })
       fileReader.readAsDataURL(fileData);
 
@@ -44,7 +61,7 @@ export const UserProfilePage = function () {
           <img
             onClick={() => handleToggleImageOrFile()}
             className="rounded-full w-40"
-            src={allUserProfileState.state.imgSrc}
+            src={UserProfileState.imgSrc}
             alt="UserProfilePic"
           />
         </div>
@@ -57,16 +74,16 @@ export const UserProfilePage = function () {
       )}
 
       <div className="flex flex-col gap-4">
-        {allUserProfileState.state.isEditingUsername === false ? (
+        {UserProfileState.isEditingUsername === false ? (
           <label
             onClick={() => {
-              allUserProfileState.setState((a) => ({
+              setUserProfileState((a) => ({
                 ...a,
-                isEditingUsername: !allUserProfileState.state.isEditingUsername,
+                isEditingUsername: !UserProfileState.isEditingUsername,
               }));
             }}
           >
-            {allUserProfileState.state.username} ✏️
+            {UserProfileState.username} ✏️
           </label>
         ) : (
           <span className="p-4 flex gap-4">
@@ -74,14 +91,14 @@ export const UserProfilePage = function () {
               onChange={(e) => handleChange(e)}
               name="username"
               type="text"
-              value={allUserProfileState.state.username}
+              value={UserProfileState.username}
             />
             <button
               onClick={() => {
-                allUserProfileState.setState((a) => ({
+                setUserProfileState((a) => ({
                   ...a,
                   isEditingUsername:
-                    !allUserProfileState.state.isEditingUsername,
+                    !UserProfileState.isEditingUsername,
                 }));
               }}
             >
@@ -90,16 +107,16 @@ export const UserProfilePage = function () {
             <button>💾</button>
           </span>
         )}
-        {allUserProfileState.state.isEditingPassword === false ? (
+        {UserProfileState.isEditingPassword === false ? (
           <label
             onClick={() => {
-              allUserProfileState.setState((a) => ({
+              setUserProfileState((a) => ({
                 ...a,
-                isEditingPassword: !allUserProfileState.state.isEditingPassword,
+                isEditingPassword: !UserProfileState.isEditingPassword,
               }));
             }}
           >
-            {allUserProfileState.state.password} ✏️
+            {UserProfileState.password} ✏️
           </label>
         ) : (
           <span className="p-4 flex gap-4">
@@ -107,14 +124,14 @@ export const UserProfilePage = function () {
               onChange={(e) => handleChange(e)}
               name="password"
               type="text"
-              value={allUserProfileState.state.password}
+              value={UserProfileState.password}
             />
             <button
               onClick={() => {
-                allUserProfileState.setState((a) => ({
+                setUserProfileState((a) => ({
                   ...a,
                   isEditingPassword:
-                    !allUserProfileState.state.isEditingPassword,
+                    !UserProfileState.isEditingPassword,
                 }));
               }}
             >
@@ -123,16 +140,16 @@ export const UserProfilePage = function () {
             <button>💾</button>
           </span>
         )}
-        {allUserProfileState.state.isEditingEmail === false ? (
+        {UserProfileState.isEditingEmail === false ? (
           <label
             onClick={() => {
-              allUserProfileState.setState((a) => ({
+              setUserProfileState((a) => ({
                 ...a,
-                isEditingEmail: !allUserProfileState.state.isEditingEmail,
+                isEditingEmail: !UserProfileState.isEditingEmail,
               }));
             }}
           >
-            {allUserProfileState.state.email} ✏️
+            {UserProfileState.email} ✏️
           </label>
         ) : (
           <span className="p-4 flex gap-4">
@@ -140,13 +157,13 @@ export const UserProfilePage = function () {
               onChange={(e) => handleChange(e)}
               name="email"
               type="text"
-              value={allUserProfileState.state.email}
+              value={UserProfileState.email}
             />
             <button
               onClick={() => {
-                allUserProfileState.setState((a) => ({
+                setUserProfileState((a) => ({
                   ...a,
-                  isEditingEmail: !allUserProfileState.state.isEditingEmail,
+                  isEditingEmail: !UserProfileState.isEditingEmail,
                 }));
               }}
             >
