@@ -102,9 +102,8 @@ export const UserProfilePage = function () {
                 }));
               }}
             >
-              cancel
+              💾
             </button>
-            <button>💾</button>
           </span>
         )}
         {UserProfileState.isEditingPassword === false ? (
@@ -135,9 +134,8 @@ export const UserProfilePage = function () {
                 }));
               }}
             >
-              cancel
+              💾
             </button>
-            <button>💾</button>
           </span>
         )}
         {UserProfileState.isEditingEmail === false ? (
@@ -167,9 +165,8 @@ export const UserProfilePage = function () {
                 }));
               }}
             >
-              cancel
+              💾
             </button>
-            <button>💾</button>
           </span>
         )}
       </div>
