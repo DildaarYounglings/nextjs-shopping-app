@@ -5,7 +5,7 @@ import firebase from "firebase/compat/app";
 import { exportTraceState } from "next/dist/trace";
 import {User, deleteUser, getAuth} from "firebase/auth";
 import { use } from "react";
-import { mustGetValue, mustGetValueAsync } from "@/utils/must-get-value";
+import {mustGetValueAsync} from "@/utils/must-get-value";
 import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -44,4 +44,4 @@ const firebaseApp = initializeApp(firebaseConfig,"my app")
 export const app = firebaseApp as firebase.app.App;
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const user = (mustGetValueAsync<typeof auth.currentUser>(auth.currentUser)).then(result => result);
+export const user = (mustGetValueAsync<typeof auth.currentUser>(auth.currentUser,new Error("can't get user or user doesnt exist"))).then(result => result);

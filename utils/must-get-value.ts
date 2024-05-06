@@ -1,11 +1,5 @@
-export async function mustGetValue<T>(value:T){
+export async function mustGetValueAsync<T>(value:T,error:Error){
     const container = await value;
-    if(!container){throw new Error("function failed to return user it is possible that no user was created or signed in")}
-    return container;
-}
-
-export async function mustGetValueAsync<T>(value:T){
-    const container = await value;
-    if(!container){throw new Error("function failed to return user it is possible that no user was created or signed in")}
+    if(!container){throw error;}
     return container;
 }
