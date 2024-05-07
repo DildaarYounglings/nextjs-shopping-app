@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/app/api/products/data";
+import { Product } from "../globalZustandState/global-state";
 import { useGET } from "@/hooks/useGET";
 import { useFetch } from "@/hooks/useFetch";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 const ProductsPage = () => {
   const {windowDimensions} = useWindowDimensions();
   const {variable:productsArray} = useGET("/api/products/")
-  const handleSendToCheckout = async function(product:Product){
-    useFetch({url:"/api/checkout",method:'POST'},product);
+  const handleSendToCheckout = async function(){
   }
   if (windowDimensions.width <= 500) {
     return (
