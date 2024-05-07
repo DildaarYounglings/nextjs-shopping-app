@@ -1,5 +1,5 @@
 "use client";
-import { CheckoutProduct } from "@/app/api/checkout/data";
+import { CheckoutProduct } from "../globalZustandState/global-state";
 import { useFetch } from "@/hooks/useFetch";
 import React, { useEffect, useState } from "react";
 

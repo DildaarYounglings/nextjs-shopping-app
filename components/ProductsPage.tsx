@@ -1,16 +1,16 @@
 "use client";
 
-import { Product } from "../globalZustandState/global-state";
+import { Checkout_Cart_State, useCheckoutCart } from "../globalZustandState/global-state";
 import { useGET } from "@/hooks/useGET";
 import { useFetch } from "@/hooks/useFetch";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import React, { useEffect, useState } from "react";
 
+
 const ProductsPage = () => {
   const {windowDimensions} = useWindowDimensions();
   const {variable:productsArray} = useGET("/api/products/")
-  const handleSendToCheckout = async function(){
-  }
+  const {addToCheckoutCart,deleteFromCheckoutCart}:Checkout_Cart_State = useCheckoutCart()
   if (windowDimensions.width <= 500) {
     return (
       <div className="flex gap-10" style={{ width: "1fr" }}>
@@ -23,7 +23,7 @@ const ProductsPage = () => {
             >
               <span>{product.stickerName}</span>
               <span>R {product.stickerPrice}</span>
-              <button onClick={() => {handleSendToCheckout(product)}} type="button" className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100">
+              <button onClick={() => {}} type="button" className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100">
                 buy
               </button>
             </div>
@@ -43,7 +43,7 @@ const ProductsPage = () => {
           >
             <span>{product.stickerName}</span>
             <span>R {product.stickerPrice}</span>{" "}
-            <button onClick={() => handleSendToCheckout(product)} type="button" className="w-full h-fit p-1 bg-green-300">
+            <button onClick={() => addToCheckoutCart(product)} type="button" className="w-full h-fit p-1 bg-green-300">
               buy
             </button>
           </div>

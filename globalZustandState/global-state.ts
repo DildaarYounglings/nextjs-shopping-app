@@ -1,11 +1,15 @@
 import { create } from "zustand";
 export type CheckoutProduct = {
-    id:number,
     stickerName:string,
     stickerPrice:number,
 }
+export type Checkout_Cart_State = {
+    checkoutCart:CheckoutProduct[],
+    addToCheckoutCart:(product:CheckoutProduct) =>void,
+    deleteFromCheckoutCart:(product:CheckoutProduct) =>void,
+}
 const checkoutCart:CheckoutProduct[] =[];
-const useCheckoutCart = create((set)=>({
+export const useCheckoutCart = create<Checkout_Cart_State>((set)=>({
     checkoutCart,
     addToCheckoutCart:(product:CheckoutProduct)=>set((state)=>{
         if(state.checkoutCart.includes(product) === false ){
@@ -14,7 +18,7 @@ const useCheckoutCart = create((set)=>({
             return {checkoutCart:[...state.checkoutCart]};
         }
     }),
-    DeleteFromCheckoutCart:(product:CheckoutProduct)=>set((state)=>{
+    deleteFromCheckoutCart:(product:CheckoutProduct)=>set((state)=>{
         const set = new Set<CheckoutProduct>(state.checkoutCart);
         set.delete(product);
         let array:CheckoutProduct[] = [];
