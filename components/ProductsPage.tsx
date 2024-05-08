@@ -2,9 +2,7 @@
 
 import { CheckoutProduct, Checkout_Cart_State, useCheckoutCart } from "../globalZustandState/global-state";
 import { useGET } from "@/hooks/useGET";
-import { useFetch } from "@/hooks/useFetch";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
-import React, { useEffect, useState } from "react";
 
 
 const ProductsPage = () => {
@@ -12,20 +10,11 @@ const ProductsPage = () => {
   const {variable:productsArray} = useGET("/api/products/")
   const {checkoutCart,setCheckoutCart}:Checkout_Cart_State = useCheckoutCart(state => state);
   function addToCheckoutCart(product:CheckoutProduct){
-    if(checkoutCart.includes(product)){
-      return;
+    if(checkoutCart.includes(product)===false){
+      setCheckoutCart(state=>({checkoutCart:[...state.checkoutCart,product]}));
     }
-    setCheckoutCart(state=>({checkoutCart:[...state.checkoutCart,product]}));
   }
-  function deleteFromCheckoutCart(product: CheckoutProduct) {
-    const s = new Set<CheckoutProduct>(checkoutCart);
-    s.delete(product);
-    let array: CheckoutProduct[] = [];
-    s.forEach((value: CheckoutProduct) => {
-        array.push(value);
-    });
-    setCheckoutCart(state=>({checkoutCart:[...array]}));
-}
+  
   if (windowDimensions.width <= 500) {
     return (
       <div className="flex gap-10" style={{ width: "1fr" }}>
@@ -38,7 +27,7 @@ const ProductsPage = () => {
             >
               <span>{product.stickerName}</span>
               <span>R {product.stickerPrice}</span>
-              <button onClick={() => {}} type="button" className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100">
+              <button onClick={() => addToCheckoutCart(product)} type="button" className="w-full h-fit p-1 bg-green-300 hover:bg-slate-100">
                 buy
               </button>
             </div>
