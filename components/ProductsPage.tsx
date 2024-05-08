@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkout_Cart_State, useCheckoutCart } from "../globalZustandState/global-state";
+import { CheckoutProduct, Checkout_Cart_State, useCheckoutCart } from "../globalZustandState/global-state";
 import { useGET } from "@/hooks/useGET";
 import { useFetch } from "@/hooks/useFetch";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
@@ -10,7 +10,22 @@ import React, { useEffect, useState } from "react";
 const ProductsPage = () => {
   const {windowDimensions} = useWindowDimensions();
   const {variable:productsArray} = useGET("/api/products/")
-  const {addToCheckoutCart,deleteFromCheckoutCart}:Checkout_Cart_State = useCheckoutCart()
+  const {checkoutCart,setCheckoutCart}:Checkout_Cart_State = useCheckoutCart(state => state);
+  function addToCheckoutCart(product:CheckoutProduct){
+    if(checkoutCart.includes(product)){
+      return;
+    }
+    setCheckoutCart(state=>({checkoutCart:[...state.checkoutCart,product]}));
+  }
+  function deleteFromCheckoutCart(product: CheckoutProduct) {
+    const s = new Set<CheckoutProduct>(checkoutCart);
+    s.delete(product);
+    let array: CheckoutProduct[] = [];
+    s.forEach((value: CheckoutProduct) => {
+        array.push(value);
+    });
+    setCheckoutCart(state=>({checkoutCart:[...array]}));
+}
   if (windowDimensions.width <= 500) {
     return (
       <div className="flex gap-10" style={{ width: "1fr" }}>
