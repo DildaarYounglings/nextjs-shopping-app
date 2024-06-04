@@ -1,10 +1,6 @@
 "use client";
-import { formDataArray } from "@/app/api/form/data";
 import { useUserProfile } from "@/globalZustandState/global-state";
-
 import React, { FormEvent, useState } from "react";
-import { json } from "stream/consumers";
-import { URL } from "url";
 
 export type allUserProfileState = {
   username:string,
