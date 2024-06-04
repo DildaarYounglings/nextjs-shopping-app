@@ -1,5 +1,6 @@
 "use client";
 import { formDataArray } from "@/app/api/form/data";
+import { useUserProfile } from "@/globalZustandState/global-state";
 
 import React, { FormEvent, useState } from "react";
 import { json } from "stream/consumers";
@@ -9,20 +10,15 @@ export type allUserProfileState = {
   username:string,
   email:string,
   imgSrc:string,
-  isEditingUsername:boolean,
-  isEditingPassword:boolean,
-  isEditingEmail:boolean,
 }
 export const UserProfilePage = function () {
+  const user_profile_in_global_state = useUserProfile
   const [UserProfileState,setUserProfileState] = useState<allUserProfileState>({
     username:"",
     email:"",
     imgSrc:"",
-    isEditingUsername:false,
-    isEditingPassword:false,
-    isEditingEmail:false,
   })
-  const [isFileInput, setIsFileInput] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [file, setFile] = useState<File|undefined>();
   function handleChange(e: any){
     const { name, value } = e.target;
@@ -30,8 +26,8 @@ export const UserProfilePage = function () {
       return { ...a, [name]: value };
     });
   }
-  function handleToggleImageOrFile() {
-    setIsFileInput((f) => !f);
+  function handleToggleIsEditing() {
+    setIsEditing((f) => !f);
   }
   async function handleChangeImageToAnother(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
@@ -50,64 +46,46 @@ export const UserProfilePage = function () {
     } catch (err) {
       console.log(err)
     }
-    finally{
-      handleToggleImageOrFile();
-    }
   }
 
   return (
     <section className="p-4 flex flex-col gap-4 w-full  content-center items-center align-middle">
-      {isFileInput === false ? (
-        <div>
-          <img
-            onClick={() => handleToggleImageOrFile()}
-            className="rounded-full w-40"
-            src={UserProfileState.imgSrc}
-            alt="UserProfilePic"
-          />
-        </div>
-      ) : (
-        <form onSubmit={e => handleChangeImageToAnother(e)} className="flex gap-4">
-          <input type="file" onChange={e => setFile(e.target.files?.[0])} />
-          <input className="p-3 bg-black text-white" type="button" value="Cancel" onClick={() => handleToggleImageOrFile()}/>
-          <input className="p-3 bg-black text-white" type="submit" value="save"/>
-        </form>
-      )}
-
-      <div className="flex flex-col gap-4">
-        {UserProfileState.isEditingUsername === false ? (
-          <label
-            onClick={() => {
-              setUserProfileState((a) => ({
-                ...a,
-                isEditingUsername: !UserProfileState.isEditingUsername,
-              }));
-            }}
-          >
+      {isEditing ? (
+        <>
+          <div>
+            <img
+              onClick={() => handleToggleIsEditing()}
+              className="rounded-full w-40"
+              src={UserProfileState.imgSrc}
+              alt="UserProfilePic"
+            />
+          </div>
+          <label>
             {UserProfileState.username} ✏️
           </label>
-        ) : (
-          <span className="p-4 flex gap-4">
-            <input
-              onChange={(e) => handleChange(e)}
-              name="username"
-              type="text"
-              value={UserProfileState.username}
-            />
-            <button
-              onClick={() => {
-                setUserProfileState((a) => ({
-                  ...a,
-                  isEditingUsername:
-                    !UserProfileState.isEditingUsername,
-                }));
-              }}
-            >
-              💾
-            </button>
-          </span>
-        )}
-      </div>
+        </>
+      ) : (
+        
+          <form onSubmit={e => handleChangeImageToAnother(e)} className="flex gap-4">
+            <input type="file" onChange={e => setFile(e.target.files?.[0])} />
+            <span className="p-4 flex gap-4">
+              <input
+                onChange={(e) => handleChange(e)}
+                name="username"
+                type="text"
+                value={UserProfileState.username}
+              />
+            <input className="p-3 bg-black text-white" type="button" value="Cancel" onClick={() => handleToggleIsEditing()}/>
+            <input className="p-3 bg-black text-white" type="submit" value="save" onClick={
+              ()=>{
+                user_profile_in_global_state.setState((state)=>({userProfile:UserProfileState}));
+                handleToggleIsEditing();
+              }
+            }/>
+            </span>
+          </form>
+        
+      )}
     </section>
   );
 };

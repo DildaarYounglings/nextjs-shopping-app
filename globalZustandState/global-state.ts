@@ -1,3 +1,4 @@
+import { allUserProfileState } from "@/components/UserProfilePage";
 import { AnyRecord } from "dns";
 import { UserProfile } from "firebase/auth";
 import { create } from "zustand";
@@ -19,12 +20,12 @@ export const useCheckoutCart = create<Checkout_Cart_State>((set) => ({
 }));
 
 export type UserProfileState = {
-    userProfile:any,
+    userProfile:allUserProfileState,
     setUserProfile: (setterFunction: (state:UserProfileState) => Checkout_Cart_State|any) => void,
 }
 const checkoutCart: CheckoutProduct[] = [];
 export const useUserProfile = create<UserProfileState>((set) => ({
-    userProfile:{},
+    userProfile:{username:"",email:"",imgSrc:""},
     setUserProfile(setterFunction)
     {
         set(setterFunction);
