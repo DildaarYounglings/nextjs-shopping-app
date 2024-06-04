@@ -5,11 +5,10 @@ import React, { FormEvent, useState } from "react";
 import { json } from "stream/consumers";
 import { URL } from "url";
 
-type allUserProfileState = {
+export type allUserProfileState = {
   username:string,
-  password:string,
   email:string,
-  imgSrc:string|ArrayBuffer|null,
+  imgSrc:string,
   isEditingUsername:boolean,
   isEditingPassword:boolean,
   isEditingEmail:boolean,
@@ -17,7 +16,6 @@ type allUserProfileState = {
 export const UserProfilePage = function () {
   const [UserProfileState,setUserProfileState] = useState<allUserProfileState>({
     username:"",
-    password:"",
     email:"",
     imgSrc:"",
     isEditingUsername:false,
@@ -42,12 +40,15 @@ export const UserProfilePage = function () {
       const fileData = file;
       const fileReader = new FileReader();
       fileReader.addEventListener("load",()=>{
-        setUserProfileState((a)=>({...a,imgSrc:fileReader.result}))
-      })
+        setUserProfileState((a)=>{
+          if(typeof fileReader.result !== "string")return a;
+          return{...a,imgSrc:fileReader.result};
+        })
+      });
       fileReader.readAsDataURL(fileData);
 
     } catch (err) {
-      console.error(err)
+      console.log(err)
     }
     finally{
       handleToggleImageOrFile();
@@ -99,69 +100,6 @@ export const UserProfilePage = function () {
                   ...a,
                   isEditingUsername:
                     !UserProfileState.isEditingUsername,
-                }));
-              }}
-            >
-              💾
-            </button>
-          </span>
-        )}
-        {UserProfileState.isEditingPassword === false ? (
-          <label
-            onClick={() => {
-              setUserProfileState((a) => ({
-                ...a,
-                isEditingPassword: !UserProfileState.isEditingPassword,
-              }));
-            }}
-          >
-            {UserProfileState.password} ✏️
-          </label>
-        ) : (
-          <span className="p-4 flex gap-4">
-            <input
-              onChange={(e) => handleChange(e)}
-              name="password"
-              type="text"
-              value={UserProfileState.password}
-            />
-            <button
-              onClick={() => {
-                setUserProfileState((a) => ({
-                  ...a,
-                  isEditingPassword:
-                    !UserProfileState.isEditingPassword,
-                }));
-              }}
-            >
-              💾
-            </button>
-          </span>
-        )}
-        {UserProfileState.isEditingEmail === false ? (
-          <label
-            onClick={() => {
-              setUserProfileState((a) => ({
-                ...a,
-                isEditingEmail: !UserProfileState.isEditingEmail,
-              }));
-            }}
-          >
-            {UserProfileState.email} ✏️
-          </label>
-        ) : (
-          <span className="p-4 flex gap-4">
-            <input
-              onChange={(e) => handleChange(e)}
-              name="email"
-              type="text"
-              value={UserProfileState.email}
-            />
-            <button
-              onClick={() => {
-                setUserProfileState((a) => ({
-                  ...a,
-                  isEditingEmail: !UserProfileState.isEditingEmail,
                 }));
               }}
             >
